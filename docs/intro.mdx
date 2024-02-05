@@ -1,0 +1,95 @@
+---
+sidebar_position: 1
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+# Welcome
+
+## What is BricksAI?
+
+BricksAI is a platform for monitoring and securing generative AI applications. We take care of the boring parts, so you can focus on building your product, instead of yet another GenAI wrapper.
+
+## Start securing and monitoring your LLM requests
+
+### Step 1: Sign up for an account
+
+Get started by **[signing into](https://www.trybricks.ai/sign-in)** BricksAI. Create a new organization, or ask a colleague to invite you to an existing one.
+
+### Step 2: Connect your LLM providers
+
+To connect your LLM providers, go to the Settings page. Under "LLM providers", click "Add provider", fill in all information, then click "Add".
+
+### Step 3: Create a secret key
+
+To create a secret key, go to the Secret keys page. Click "Create a new secret key", fill in all information, then click "Create".
+
+### Step 4: Make a call to an LLM provider via BricksAI
+
+To make a call to an LLM provider using BricksAI, make two changes in your code:
+
+1. Send your request to `https://api.trybricks.ai/`. **[This document](https://github.com/bricks-cloud/BricksLLM?tab=readme-ov-file#openai-proxy)** lists all endpoints that we currently support. For example, to call the OpenAI completion endpoint, you should send a request to `https://api.trybricks.ai/api/providers/openai/v1/chat/completions`.
+
+2. In your request headers, replace your provider's API key with BricksAI's secret key.
+
+Below are sample code snippets for calling OpenAI with BricksAI:
+
+<Tabs>
+
+<TabItem value="py" label="Python SDK">
+
+```py
+from openai import OpenAI
+
+client = OpenAI(
+  api_key="your-bricks-secret-key",
+  base_url="https://api.trybricks.ai/api/providers/openai/v1",
+)
+
+# Call OpenAI as normal...
+```
+
+</TabItem>
+<TabItem value="js" label="Node SDK">
+
+```js
+import OpenAI from "openai";
+
+const openai = new OpenAI({
+  apiKey: "your-bricks-secret-key",
+  baseURL: "https://api.trybricks.ai/api/providers/openai/v1",
+});
+
+// Call OpenAI as normal...
+```
+
+</TabItem>
+<TabItem value="curl" label="curl">
+
+```bash
+curl --request POST \
+  --url https://api.trybricks.ai/api/providers/openai/v1/chat/completions \
+  --header 'Authorization: Bearer your-bricks-secret-key' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "model": "gpt-3.5-turbo",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a helpful assistant."
+      },
+      {
+        "role": "user",
+        "content": "hi"
+      }
+    ]
+  }'
+```
+
+</TabItem>
+</Tabs>
+
+### Done!
+
+When you head back to your dashboard page, you should be able to see metrics of the request you just made.
