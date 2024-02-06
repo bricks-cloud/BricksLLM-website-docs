@@ -46,13 +46,6 @@ const config = {
           editUrl:
             "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
         },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
-        },
         theme: {
           customCss: "./src/css/custom.css",
         },
@@ -70,6 +63,7 @@ const config = {
         logo: {
           alt: "BricksAI Logo",
           src: "img/logo.svg",
+          srcDark: "img/logo-dark.svg",
         },
         items: [
           {
@@ -78,7 +72,16 @@ const config = {
             position: "left",
             label: "Tutorial",
           },
-          { to: "/blog", label: "Blog", position: "left" },
+          {
+            href: "https://trybricks.ai",
+            label: "Company",
+            position: "right",
+          },
+          {
+            href: "https://discord.com/invite/a7b757bnKb",
+            label: "Discord",
+            position: "right",
+          },
           {
             href: "https://github.com/bricks-cloud/BricksLLM",
             label: "GitHub",
@@ -115,8 +118,8 @@ const config = {
             title: "More",
             items: [
               {
-                label: "Blog",
-                to: "/blog",
+                label: "Company",
+                href: "https://trybricks.ai",
               },
               {
                 label: "GitHub",
@@ -125,7 +128,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Bricks Cloud Technologies, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Bricks Cloud Technologies, Inc.`,
       },
       prism: {
         theme: prismThemes.github,
