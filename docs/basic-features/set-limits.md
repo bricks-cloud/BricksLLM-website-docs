@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Limits per secret key
+# Set limits on secret key
 
 To prevent one project or user from using all of your LLM's rate limit or cost, you can set limits on each secret key.
 

@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-# Custom ID per request
+# Attach Custom ID to requests
 
 To track a specific request, you can add a custom ID, such as a user ID, to the request. This ID will be included in logs, and you can use it to track the request in your system.
 
