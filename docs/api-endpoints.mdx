@@ -1,0 +1,118 @@
+---
+sidebar_position: 3
+---
+
+# API Endpoints
+
+## Authorization
+
+To authorize your requests, you need to include your BricksAI secret key in the `Authorization` header. You can find your BricksAI secret key by navigating to the **[Settings]** page. Under "Developer access", click "Enable". Then you will see your BricksAI secret key.
+
+## Providers
+
+### List Providers
+
+```http
+GET https://trybricks.ai/api/v1/providers
+```
+
+#### Response
+
+```json
+[
+  {
+    "name": "Some descriptive name for the provider",
+    "id": "some-provider-id",
+    "createdAt": 1707864319,
+    "updatedAt": 1707864319,
+    "provider": "openai",
+    "allowedModels": [] // Not used yet, can be ignored
+  }
+]
+```
+
+## Proxy Secret Keys
+
+### List Proxy Secret Keys
+
+```http
+GET https://trybricks.ai/api/v1/secret-keys
+```
+
+#### Response
+
+```json
+[
+  {
+    "name": "Some descriptive name for the key",
+    "keyId": "some-key-id", // Unique identifier of the key
+    "tags": ["clskya3uu0005ye8ggt5bp775"], // Organization ID
+    "key": "hashed-version-of-the-key", // Hashed value of the proxy secret key, can be ignored
+    "createdAt": 1708065781,
+    "updatedAt": 1708065781,
+    "revoked": false,
+    "revokedReason": "",
+    "costLimitInUsd": 100, // Cost limit over lifetime
+    "costLimitInUsdOverTime": 100, // Cost limit per time unit
+    "costLimitInUsdUnit": "mo", // Cost limit time unit
+    "rateLimitOverTime": 10, // Rate limit per time unit
+    "rateLimitUnit": "h", // Rate limit time unit
+    "ttl": "1h", // Time to live
+    "settingId": "", // Deprecated, can be ignored
+    "settingIds": ["some-provider-id"]
+  }
+]
+```
+
+### Create a Proxy Secret Key
+
+```http
+POST https://trybricks.ai/api/v1/secret-keys
+```
+
+#### Request body
+
+```json
+{
+  "name": "Some name", // Required, some descriptive name for the key
+  "providerSettingIds": ["some-provider-id"], // Required, provider ID
+  "ttl": "1h", // Optional, time to live, must be a positive integer followed by s, m, or h
+  "rateLimitOverTime": 10, // Optional, rate limit per time unit
+  "rateLimitUnit": "h", // Optional, rate limit time unit
+  "costLimitInUsdPerMonth": 100, // Optional, cost limit over lifetime
+  "costLimitInUsdLifetime": 100 // Optional, cost limit per time unit
+}
+```
+
+#### Response
+
+```json
+{
+  "id": "some-key-id", // Unique identifier of the key
+  "name": "Some name",
+  "organizationId": "some-organization-id",
+  "key": "some-proxy-secret-key" // Proxy secret key, make sure to store it securely as you won't see it again
+}
+```
+
+### Update a Proxy Secret Key
+
+```http
+PATCH https://trybricks.ai/api/v1/secret-keys/[keyId]
+```
+
+#### Request body
+
+```json
+{
+  "name": "Some name", // Optional, some descriptive name for the key
+  "settingIds": ["some-provider-id"], // Optional, provider ID
+  "revoked": true // Optional, whether the key is revoked
+}
+```
+
+#### Response
+
+```txt
+success
+```
