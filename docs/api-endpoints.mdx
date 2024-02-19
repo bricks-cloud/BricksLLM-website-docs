@@ -77,10 +77,10 @@ POST https://trybricks.ai/api/v1/secret-keys
   "name": "Some name", // Required, some descriptive name for the key
   "providerSettingIds": ["some-provider-id"], // Required, provider ID
   "ttl": "1h", // Optional, time to live, must be a positive integer followed by s, m, or h
-  "rateLimitOverTime": 10, // Optional, rate limit per time unit
-  "rateLimitUnit": "h", // Optional, rate limit time unit
-  "costLimitInUsdPerMonth": 100, // Optional, cost limit over lifetime
-  "costLimitInUsdLifetime": 100 // Optional, cost limit per time unit
+  "rateLimitOverTime": 10, // Optional, rate limit per time unit, as specified in "rateLimitUnit"
+  "rateLimitUnit": "h", // Optional, rate limit time unit, must be s, m, or h
+  "costLimitInUsdPerMonth": 100, // Optional, cost limit per month
+  "costLimitInUsdLifetime": 100 // Optional, cost limit over lifetime
 }
 ```
 
@@ -108,6 +108,10 @@ PATCH https://trybricks.ai/api/v1/secret-keys/[keyId]
   "name": "Some name", // Optional, some descriptive name for the key
   "settingIds": ["some-provider-id"], // Optional, provider ID
   "revoked": true // Optional, whether the key is revoked
+  "rateLimitOverTime": 10, // Optional, rate limit per time unit, as specified in "rateLimitUnit"
+  "rateLimitUnit": "h", // Optional, rate limit time unit, must be s, m, or h
+  "costLimitInUsdPerMonth": 100, // Optional, cost limit per month
+  "costLimitInUsdLifetime": 100 // Optional, cost limit over lifetime
 }
 ```
 
