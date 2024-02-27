@@ -1,0 +1,71 @@
+---
+sidebar_position: 3
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+# Anthropic Integration
+
+This guide describes how you can integrate Anthropic with BricksAI to gain fine-grained monitoring and access control over your Anthropic calls.
+
+**[Here](https://github.com/bricks-cloud/BricksLLM?tab=readme-ov-file#anthropic-proxy)** is a list of all currently supported Anthropic API endpoints.
+
+### Step 1. Add your Anthropic API key
+
+Go to the Settings page. Under "LLM providers", click "Add provider", select "Anthropic", fill in all information, then click "Add".
+
+### Step 2. Create a proxy secret key
+
+To create a proxy secret key, go to the Secret keys page. Click "Create a new secret key", fill in all information, then click "Create".
+
+### Step 3. Make a call to Anthropic via BricksAI
+
+Below are sample code snippets for calling Anthropic with BricksAI:
+
+<Tabs>
+
+<TabItem value="py" label="Python SDK">
+
+```py
+import anthropic
+
+client = anthropic.Anthropic(
+  base_url="https://api.trybricks.ai/api/providers/anthropic/v1",
+  api_key="your-bricks-secret-key",
+)
+
+# Call Anthropic as normal...
+```
+
+</TabItem>
+<TabItem value="js" label="Node SDK">
+
+```js
+import Anthropic from "@anthropic-ai/sdk";
+
+const anthropic = new Anthropic({
+  baseURL: "https://api.trybricks.ai/api/providers/anthropic/v1",
+  apiKey: "your-bricks-secret-key",
+});
+
+// Call Anthropic as normal...
+```
+
+</TabItem>
+<TabItem value="curl" label="curl">
+
+```bash
+curl --request POST \
+  --url https://api.trybricks.ai/api/providers/anthropic/v1/complete \
+  --header 'Authorization: Bearer your-bricks-secret-key' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "model": "claude-2.1",
+    "max_tokens_to_sample": 1024,
+    "prompt": "\n\nHuman: Hello, Claude\n\nAssistant:"
+  }'
+```
+
+</TabItem>
+</Tabs>

@@ -1,0 +1,103 @@
+---
+sidebar_position: 1
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+# OpenAI Integration
+
+This guide describes how you can integrate OpenAI with BricksAI to gain fine-grained monitoring and access control over your OpenAI calls.
+
+**[Here](https://github.com/bricks-cloud/BricksLLM?tab=readme-ov-file#openai-proxy)** is a list of all currently supported OpenAI API endpoints.
+
+### Step 1. Add your OpenAI API key
+
+Go to the Settings page. Under "LLM providers", click "Add provider", select "OpenAI", fill in all information, then click "Add".
+
+### Step 2. Create a proxy secret key
+
+To create a proxy secret key, go to the Secret keys page. Click "Create a new secret key", fill in all information, then click "Create".
+
+### Step 3. Make a call to OpenAI via BricksAI
+
+Below are sample code snippets for calling OpenAI with BricksAI:
+
+<Tabs>
+
+<TabItem value="py" label="Python SDK">
+
+```py
+from openai import OpenAI
+
+client = OpenAI(
+  api_key="your-bricks-secret-key",
+  base_url="https://api.trybricks.ai/api/providers/openai/v1",
+)
+
+# Call OpenAI as normal...
+```
+
+</TabItem>
+<TabItem value="langchain-py" label="Python Langchain">
+
+```py
+# Just update your environment variable!
+export OPENAI_API_BASE="https://api.trybricks.ai/api/providers/openai/v1"
+```
+
+</TabItem>
+<TabItem value="js" label="Node SDK">
+
+```js
+import OpenAI from "openai";
+
+const openai = new OpenAI({
+  apiKey: "your-bricks-secret-key",
+  baseURL: "https://api.trybricks.ai/api/providers/openai/v1",
+});
+
+// Call OpenAI as normal...
+```
+
+</TabItem>
+<TabItem value="langchain-js" label="Node LangChain">
+
+```js
+import { OpenAI } from "@langchain/openai";
+
+const model = new OpenAI({
+  openAIApiKey: "your-bricks-secret-key",
+  configuration: {
+    baseURL: "https://api.trybricks.ai/api/providers/openai/v1",
+  },
+});
+
+// Call OpenAI as normal...
+```
+
+</TabItem>
+<TabItem value="curl" label="curl">
+
+```bash
+curl --request POST \
+  --url https://api.trybricks.ai/api/providers/openai/v1/chat/completions \
+  --header 'Authorization: Bearer your-bricks-secret-key' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "model": "gpt-3.5-turbo",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a helpful assistant."
+      },
+      {
+        "role": "user",
+        "content": "hi"
+      }
+    ]
+  }'
+```
+
+</TabItem>
+</Tabs>

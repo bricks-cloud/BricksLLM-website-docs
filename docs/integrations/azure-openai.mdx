@@ -1,0 +1,51 @@
+---
+sidebar_position: 2
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+# Azure OpenAI Integration
+
+This guide describes how you can integrate Azure OpenAI with BricksAI to gain fine-grained monitoring and access control over your Azure OpenAI calls.
+
+**[Here](https://github.com/bricks-cloud/BricksLLM?tab=readme-ov-file#azure-openai-proxy)** is a list of all currently supported Azure OpenAI API endpoints.
+
+### Step 1. Add your Azure OpenAI deployment
+
+Go to the Settings page. Under "LLM providers", click "Add provider", select "Azure OpenAI", fill in all information, then click "Add".
+
+### Step 2. Create a proxy secret key
+
+To create a proxy secret key, go to the Secret keys page. Click "Create a new secret key", fill in all information, then click "Create".
+
+### Step 3. Make a call to Azure OpenAI via BricksAI
+
+Below are sample code snippets for calling OpenAI with BricksAI:
+
+<Tabs>
+
+<TabItem value="curl" label="curl">
+
+```bash
+curl --request POST \
+  --url https://api.trybricks.ai/api/providers/azure/openai/deployments/:deployment_id/chat/completions?api-version={API_VERSION} \
+  --header 'Authorization: Bearer your-bricks-secret-key' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "model": "gpt-3.5-turbo",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a helpful assistant."
+      },
+      {
+        "role": "user",
+        "content": "hi"
+      }
+    ]
+  }'
+```
+
+</TabItem>
+</Tabs>
