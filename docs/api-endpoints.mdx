@@ -35,11 +35,51 @@ GET https://trybricks.ai/api/v1/providers
 
 ## Proxy Secret Keys
 
-### List Proxy Secret Keys
+### Fetch all Proxy Secret Keys
 
 ```http
 GET https://trybricks.ai/api/v1/secret-keys
 ```
+
+#### Response
+
+```json
+[
+  {
+    "name": "Some descriptive name for the key",
+    "keyId": "some-key-id", // Unique identifier of the key
+    "tags": ["clskya3uu0005ye8ggt5bp775"], // Organization ID
+    "createdAt": 1708065781,
+    "updatedAt": 1708065781,
+    "revoked": false,
+    "revokedReason": "",
+    "costLimitInUsd": 100, // Cost limit over lifetime
+    "costLimitInUsdOverTime": 100, // Cost limit per time unit
+    "costLimitInUsdUnit": "mo", // Cost limit time unit
+    "rateLimitOverTime": 10, // Rate limit per time unit
+    "rateLimitUnit": "h", // Rate limit time unit
+    "ttl": "1h", // Time to live
+    "settingIds": ["some-provider-id"],
+    "shouldLogRequest": false, // Whether to request body is logged by BricksAI
+    "shouldLogResponse": false // weather response body is logged by BricksAI
+  }
+]
+```
+
+### Fetch one Proxy Secret Keys
+
+```http
+GET https://trybricks.ai/api/v1/secret-keys/:keyId?includeMetrics=true&start=<start>&end=<end>&increment=<increment>
+```
+
+#### Search parameters
+
+| Parameter      | Required                           | Description                                                  |
+| -------------- | ---------------------------------- | ------------------------------------------------------------ |
+| includeMetrics | optional                           | boolean, if set to true, response will include usage metrics |
+| start          | required if includeMetrics is true | number, start time in seconds since epoch                    |
+| end            | required if includeMetrics is true | number, end time in seconds since epoch                      |
+| increment      | required if includeMetrics is true | number, increment for data points in seconds                 |
 
 #### Response
 
@@ -60,8 +100,22 @@ GET https://trybricks.ai/api/v1/secret-keys
     "rateLimitOverTime": 10, // Rate limit per time unit
     "rateLimitUnit": "h", // Rate limit time unit
     "ttl": "1h", // Time to live
-    "settingId": "", // Deprecated, can be ignored
-    "settingIds": ["some-provider-id"]
+    "settingIds": ["some-provider-id"],
+    "shouldLogRequest": false, // Whether to request body is logged by BricksAI
+    "shouldLogResponse": false, // weather response body is logged by BricksAI
+    "dataPoints": [
+      {
+        "timeStamp": 1706774400, // Time in seconds since epoch
+        "numberOfRequests": 1, // Number of requests during this increment
+        "successCount": 1, // Number of successful requests during this increment
+        "costInUsd": 100, // Cost of requests during this increment
+        "latencyInMs": 722, // Median latency during this increment
+        "promptTokenCount": 18, // Number of prompt tokens during this increment
+        "completionTokenCount": 9 // Number of completion tokens during this increment
+      }
+    ],
+    "latencyInMsMedian": 722, // Median latency over the entire time period
+    "latencyInMs99th": 722 // 99th percentile latency over the entire time period
   }
 ]
 ```
