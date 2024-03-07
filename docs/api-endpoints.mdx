@@ -38,8 +38,16 @@ GET https://trybricks.ai/api/v1/providers
 ### Fetch all Proxy Secret Keys
 
 ```http
-GET https://trybricks.ai/api/v1/secret-keys
+GET https://trybricks.ai/api/v1/secret-keys?includeMetrics=true&start=<start>&end=<end>
 ```
+
+#### Search parameters
+
+| Parameter      | Required                           | Description                                                             |
+| -------------- | ---------------------------------- | ----------------------------------------------------------------------- |
+| includeMetrics | optional                           | boolean, if set to true, response will include aggregated usage metrics |
+| start          | required if includeMetrics is true | number, start time in seconds since epoch                               |
+| end            | required if includeMetrics is true | number, end time in seconds since epoch                                 |
 
 #### Response
 
@@ -61,7 +69,16 @@ GET https://trybricks.ai/api/v1/secret-keys
     "ttl": "1h", // Time to live
     "settingIds": ["some-provider-id"],
     "shouldLogRequest": false, // Whether to request body is logged by BricksAI
-    "shouldLogResponse": false // weather response body is logged by BricksAI
+    "shouldLogResponse": false, // weather response body is logged by BricksAI
+    "metrics": {
+      // metrics of the secret key between `start` and `end`
+      "numberOfRequests": 0,
+      "successCount": 0,
+      "costInUsd": 0,
+      "latencyInMs": 0,
+      "promptTokenCount": 0,
+      "completionTokenCount": 0
+    }
   }
 ]
 ```
@@ -74,12 +91,12 @@ GET https://trybricks.ai/api/v1/secret-keys/:keyId?includeMetrics=true&start=<st
 
 #### Search parameters
 
-| Parameter      | Required                           | Description                                                  |
-| -------------- | ---------------------------------- | ------------------------------------------------------------ |
-| includeMetrics | optional                           | boolean, if set to true, response will include usage metrics |
-| start          | required if includeMetrics is true | number, start time in seconds since epoch                    |
-| end            | required if includeMetrics is true | number, end time in seconds since epoch                      |
-| increment      | required if includeMetrics is true | number, increment for data points in seconds                 |
+| Parameter      | Required                           | Description                                                                   |
+| -------------- | ---------------------------------- | ----------------------------------------------------------------------------- |
+| includeMetrics | optional                           | boolean, if set to true, response will include usage metrics as a time series |
+| start          | required if includeMetrics is true | number, start time in seconds since epoch                                     |
+| end            | required if includeMetrics is true | number, end time in seconds since epoch                                       |
+| increment      | required if includeMetrics is true | number, increment between each data point in the time series in seconds       |
 
 #### Response
 
@@ -104,6 +121,7 @@ GET https://trybricks.ai/api/v1/secret-keys/:keyId?includeMetrics=true&start=<st
     "shouldLogRequest": false, // Whether to request body is logged by BricksAI
     "shouldLogResponse": false, // weather response body is logged by BricksAI
     "dataPoints": [
+      // A time series of metrics
       {
         "timeStamp": 1706774400, // Time in seconds since epoch
         "numberOfRequests": 1, // Number of requests during this increment
