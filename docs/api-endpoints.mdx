@@ -155,8 +155,15 @@ POST https://trybricks.ai/api/v1/secret-keys
   "rateLimitUnit": "h", // Optional, rate limit time unit, must be s, m, or h
   "costLimitInUsdPerMonth": 100, // Optional, cost limit per month
   "costLimitInUsdLifetime": 100 // Optional, cost limit over lifetime
+  "keyRetrievalMethod": "ONCE" // Optional, value can be "ONCE" (default), "ONCE_PER_VIEWER", or "ANYTIME_BY_VIEWER". See more details below.
 }
 ```
+
+:::info
+
+`keyRetrievalMethod` controls how the key can be retrieved from the UI after its creation. This setting cannot be edited later. See more details <ins>[here](/docs/basic-features/create-proxy-secret-keys#key-retrieval-method)</ins>
+
+:::
 
 #### Response
 
