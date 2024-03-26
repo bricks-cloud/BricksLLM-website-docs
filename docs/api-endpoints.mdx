@@ -43,11 +43,17 @@ GET https://trybricks.ai/api/v1/secret-keys?includeMetrics=true&start=<start>&en
 
 #### Search parameters
 
-| Parameter      | Required                           | Description                                                             |
-| -------------- | ---------------------------------- | ----------------------------------------------------------------------- |
-| includeMetrics | optional                           | boolean, if set to true, response will include aggregated usage metrics |
-| start          | required if includeMetrics is true | number, start time in seconds since epoch                               |
-| end            | required if includeMetrics is true | number, end time in seconds since epoch                                 |
+:::warning
+
+`includeMetrics` will significantly slow down the request. If you don't need real-time usage, consider using the [`/v1/reporting/events-by-day`](#fetch-proxy-secret-keys-usage-by-day) endpoint.
+
+:::
+
+| Parameter      | Required                           | Description                                                            |
+| -------------- | ---------------------------------- | ---------------------------------------------------------------------- |
+| includeMetrics | optional                           | boolean, if set to true, response will include real-time usage metrics |
+| start          | required if includeMetrics is true | number, start time in seconds since epoch                              |
+| end            | required if includeMetrics is true | number, end time in seconds since epoch                                |
 
 #### Response
 
@@ -91,12 +97,18 @@ GET https://trybricks.ai/api/v1/secret-keys/:keyId?includeMetrics=true&start=<st
 
 #### Search parameters
 
-| Parameter      | Required                           | Description                                                                   |
-| -------------- | ---------------------------------- | ----------------------------------------------------------------------------- |
-| includeMetrics | optional                           | boolean, if set to true, response will include usage metrics as a time series |
-| start          | required if includeMetrics is true | number, start time in seconds since epoch                                     |
-| end            | required if includeMetrics is true | number, end time in seconds since epoch                                       |
-| increment      | required if includeMetrics is true | number, increment between each data point in the time series in seconds       |
+:::warning
+
+`includeMetrics` will significantly slow down the request. If you don't need real-time usage, consider using the [`/v1/reporting/events-by-day`](#fetch-proxy-secret-keys-usage-by-day) endpoint.
+
+:::
+
+| Parameter      | Required                           | Description                                                                             |
+| -------------- | ---------------------------------- | --------------------------------------------------------------------------------------- |
+| includeMetrics | optional                           | boolean, if set to true, response will include real-time usage metrics as a time series |
+| start          | required if includeMetrics is true | number, start time in seconds since epoch                                               |
+| end            | required if includeMetrics is true | number, end time in seconds since epoch                                                 |
+| increment      | required if includeMetrics is true | number, increment between each data point in the time series in seconds                 |
 
 #### Response
 
@@ -136,6 +148,53 @@ GET https://trybricks.ai/api/v1/secret-keys/:keyId?includeMetrics=true&start=<st
     "latencyInMs99th": 722 // 99th percentile latency over the entire time period
   }
 ]
+```
+
+### Fetch Proxy Secret Keys Usage by Day
+
+:::info
+
+This is the fastest endpoint for fetching usage metrics. However, metrics from this endpoint are only updated every 24 hours. If you need real-time data, use the slower [`/v1/secret-keys/:keyId`](#fetch-one-proxy-secret-keys) or [`/v1/secret-keys`](#fetch-all-proxy-secret-keys) endpoint instead.
+
+:::
+
+```http
+POST https://trybricks.ai/api/v1/reporting/events-by-day
+```
+
+#### Request body
+
+```json
+{
+  "start": 1710460800, // Start time in seconds since epoch
+  "end": 1711492257, // End time in seconds since epoch
+  "keyIds": ["some-key-id"] // List of key IDs
+}
+```
+
+#### Response
+
+Each object in `dataPoints` represents a key's usage for a day. If a key does not have any usage for the day, it will not be included in the response.
+
+```json
+{
+	"dataPoints": [
+		{
+			"timeStamp": 1710460800,
+			"numberOfRequests": 123,
+			"successCount": 123,
+			"costInUsd": 123,
+			"latencyInMs": 123,
+			"promptTokenCount": 123,
+			"completionTokenCount": 123,
+			"model": "",
+			"keyId": "some-key-id"
+		},
+		...
+	],
+	"latencyInMsMedian": 0, // ignore
+	"latencyInMs99th": 0 // ignore
+}
 ```
 
 ### Create a Proxy Secret Key
