@@ -16,14 +16,14 @@ When you create a secret key, you have the option to configure the following pro
 
 ### Basic settings
 
-| Property                  | Description                                                                                                               |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| Name                      | A descriptive name for the proxy secret key. Can be any string.                                                           |
-| Key retrieval method      | Configure how many times can the key be viewed after creation. See more details <ins>[here](#key-retrieval-method)</ins>. |
-| Expiry                    | How long before the proxy secret key is expired and unusable.                                                             |
-| Rate limit                | Configure how often this proxy secret key can be used to send a request.                                                  |
-| Spend limit per month     | The total amount of money you can spend using the secret key per month. Refreshes at the start of each month.             |
-| Spend limit over lifetime | The total amount of money you can spend using the secret key. Never refreshes.                                            |
+| Property                  | Description                                                                                                           |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| Name                      | A descriptive name for the proxy secret key. Can be any string.                                                       |
+| Key retrieval method      | Configure how many times can the key be viewed after creation. See more details <u>[here](#key-retrieval-method)</u>. |
+| Expiry                    | How long before the proxy secret key is expired and unusable.                                                         |
+| Rate limit                | Configure how often this proxy secret key can be used to send a request.                                              |
+| Spend limit per month     | The total amount of money you can spend using the secret key per month. Refreshes at the start of each month.         |
+| Spend limit over lifetime | The total amount of money you can spend using the secret key. Never refreshes.                                        |
 
 #### Key retrieval method
 

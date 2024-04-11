@@ -1,0 +1,47 @@
+---
+sidebar_position: 4
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+# vLLM Integration
+
+This guide describes how you can integrate vLLM with BricksAI to gain fine-grained monitoring and access control over your vLLM calls.
+
+### Step 1. Add your vLLM deployment
+
+Go to the Settings page. Under "LLM providers", click "Add provider", select "vLLM", fill in your deployment URL (required) and API key (optional), then click "Add".
+
+### Step 2. Create a proxy secret key
+
+To create a proxy secret key, go to the Secret keys page. Click "Create a new secret key", fill in all information, then click "Create".
+
+### Step 3. Make a call to vLLM via BricksAI
+
+**[Here](https://github.com/bricks-cloud/BricksLLM?tab=readme-ov-file#vllm-provider-proxy)** is a list of all currently supported vLLM API endpoints.
+
+Below are sample code snippets for calling vLLM with BricksAI:
+
+<Tabs>
+
+<TabItem value="curl" label="curl">
+
+```bash
+curl --request POST \
+  --url https://api.trybricks.ai/api/providers/vllm/v1/chat/completions \
+  --header 'Authorization: Bearer your-bricks-secret-key' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "model": "facebook/opt-125m",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is 1+1?"
+      }
+    ]
+  }'
+```
+
+</TabItem>
+</Tabs>

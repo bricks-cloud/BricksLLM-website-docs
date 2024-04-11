@@ -1,0 +1,53 @@
+---
+sidebar_position: 5
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+# DeepInfra Integration
+
+<u>[DeepInfra](https://deepinfra.com/)</u> is a platform that allows you to quickly
+host different open-source models. This guide describes how you can integrate DeepInfra
+with BricksAI.
+
+### Step 0. Deploy a model on DeepInfra
+
+If you haven't already, sign up on DeepInfra and deploy a model following <u>[this guide](https://deepinfra.com/docs/deploys)</u>. The deployment URL can be found by clicking on your deployment and navigating to the "API" tab. Your API key can be found on your <u>[API keys page](https://deepinfra.com/dash/api_keys)</u>.
+
+### Step 1. Add your DeepInfra deployment
+
+Go to the Settings page. Under "LLM providers", click "Add provider", select "DeepInfra", fill in your deployment URL and API key, then click "Add".
+
+### Step 2. Create a proxy secret key
+
+To create a proxy secret key, go to the Secret keys page. Click "Create a new secret key", fill in all information, then click "Create".
+
+### Step 3. Make a call to DeepInfra via BricksAI
+
+**[Here](https://github.com/bricks-cloud/BricksLLM?tab=readme-ov-file#deepinfra-provider-proxy)** is a list of all currently supported DeepInfra API endpoints.
+
+Below are sample code snippets for calling DeepInfra with BricksAI:
+
+<Tabs>
+
+<TabItem value="curl" label="curl">
+
+```bash
+curl --request POST \
+  --url https://api.trybricks.ai/api/providers/DeepInfra/v1/chat/completions \
+  --header 'Authorization: Bearer your-bricks-secret-key' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "model": "facebook/opt-125m",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is 1+1?"
+      }
+    ]
+  }'
+```
+
+</TabItem>
+</Tabs>
