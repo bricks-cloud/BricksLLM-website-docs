@@ -337,3 +337,138 @@ GET https://trybricks.ai/api/v1/custom-ids?keyId=<some-key-id>
   "customIds": ["id-1", "id-2", "id-3"]
 }
 ```
+
+## Users
+
+### Get all users in an organization
+
+```http
+GET https://trybricks.ai/api/v1/users
+```
+
+#### Response
+
+```json
+[
+  {
+    "id": "65853dc9-0c3f-4b6c-ad2a-edec29b7d36c",
+    "userId": "some-user-id",
+    "name": "John Doe",
+    "createdAt": 1721626167,
+    "updatedAt": 1721626167,
+    "tags": ["clusvayv40005lm3igc18ajru"],
+    "revoked": false,
+    "revokedReason": "",
+    "costLimitInUsd": 0,
+    "costLimitInUsdOverTime": 0,
+    "costLimitInUsdUnit": "",
+    "rateLimitOverTime": 0,
+    "rateLimitUnit": "",
+    "ttl": ""
+  }
+]
+```
+
+### Get one user by user ID
+
+```http
+GET https://trybricks.ai/api/v1/users/<userId>
+```
+
+#### Response
+
+```json
+{
+  "id": "65853dc9-0c3f-4b6c-ad2a-edec29b7d36c",
+  "userId": "<userId>",
+  "name": "John Doe",
+  "createdAt": 1721626167,
+  "updatedAt": 1721626167,
+  "tags": ["clusvayv40005lm3igc18ajru"],
+  "revoked": false,
+  "revokedReason": "",
+  "costLimitInUsd": 0,
+  "costLimitInUsdOverTime": 0,
+  "costLimitInUsdUnit": "",
+  "rateLimitOverTime": 0,
+  "rateLimitUnit": "",
+  "ttl": ""
+}
+```
+
+### Create a user
+
+```http
+POST https://trybricks.ai/api/v1/users
+```
+
+#### Request body
+
+```json
+{
+  "userId": "some-user-id", // optional, if not provided, BricksAI will generate a random ID for you
+  "name": "John Doe", // required
+  "ttl": "never", // required, must be one of "never" | "24h" | "168h" | "720h"
+  "rateLimitOverTime": 10, // optional()
+  "rateLimitUnit": "s", // optional, must be one of "s" | "m" | "h"
+  "costLimitInUsd": 100, // optional, cost limit over lifetime
+  "costLimitInUsdOverTime": 100, // optional, cost limit per month
+  "costLimitInUsdUnit": "mo" // optional, must be set to "mo"
+}
+```
+
+#### Response
+
+```json
+{
+  "id": "65853dc9-0c3f-4b6c-ad2a-edec29b7d36c",
+  "userId": "some-user-id",
+  "name": "John Doe",
+  "createdAt": 1721626167,
+  "updatedAt": 1721626167,
+  "tags": ["clusvayv40005lm3igc18ajru"],
+  "revoked": false,
+  "revokedReason": "",
+  "costLimitInUsd": 100,
+  "costLimitInUsdOverTime": 100,
+  "costLimitInUsdUnit": "mo",
+  "rateLimitOverTime": 10,
+  "rateLimitUnit": "s",
+  "ttl": ""
+}
+```
+
+### Revoke a user
+
+```http
+PATCH https://trybricks.ai/api/v1/users/<userId>
+```
+
+#### Request body
+
+```json
+{
+  "revoked": true // required
+}
+```
+
+#### Response
+
+```json
+{
+  "id": "65853dc9-0c3f-4b6c-ad2a-edec29b7d36c",
+  "userId": "some-user-id",
+  "name": "John Doe",
+  "createdAt": 1721626167,
+  "updatedAt": 1721626167,
+  "tags": ["clusvayv40005lm3igc18ajru"],
+  "revoked": true,
+  "revokedReason": "",
+  "costLimitInUsd": 100,
+  "costLimitInUsdOverTime": 100,
+  "costLimitInUsdUnit": "mo",
+  "rateLimitOverTime": 10,
+  "rateLimitUnit": "s",
+  "ttl": ""
+}
+```
